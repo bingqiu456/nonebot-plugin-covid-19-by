@@ -1,6 +1,6 @@
-<center><h1>nonebot-plugin-covid-19-by<h1><center>
+<h1 align="center">nonebot-plugin-covid-19-by<h1>
 
-<center><p>👉疫情小助手 支持查地区 风险地区 境外输入等👈<p><center>
+<p align="center">👉疫情小助手 支持查地区 风险地区 境外输入等👈<p>
 
 ## 安装使用
 
