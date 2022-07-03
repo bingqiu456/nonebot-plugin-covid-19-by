@@ -1,19 +1,15 @@
-from ast import Not
 import random
-from loguru import logger
 from nonebot.adapters.onebot.v11 import Message,MessageSegment,GroupMessageEvent
 from nonebot import on_command
+from nonebot.log import logger
 from nonebot.params import CommandArg,ArgPlainText
 import httpx,os,aiofiles
 from . import config_covid_19
 from PIL import Image, ImageFont, ImageDraw
-from time import strftime
 import os,datetime
-config_covid_19
 
 
-async def json_ge(p):
-    return str(str(p).replace("[","").replace("]","").replace("','","").replace(' ',""))
+
 
 def max(p):
     a = []
@@ -52,12 +48,23 @@ async def CreateImg(text,colour,size):
 
 
 
-searchcovid =  on_command('by_covid_19_search')
-covid_news = on_command('by_covid_19_news')
-covid_19_mulu = on_command("by_covid_19")
-ranking_list_jwsr = on_command("by_covid_19_list_jwsr")
-details_covid = on_command("by_covid_19_details")
-cha_covid = on_command("by_covid_19_cha")
+searchcovid =  on_command('查询疫情',priority=30)
+covid_news = on_command('疫情资讯',priority=30)
+covid_19_mulu = on_command("疫情菜单",priority=30)
+ranking_list_jwsr = on_command("境外输入排行榜",priority=30)
+details_covid = on_command("疫情现状",priority=30)
+cha_covid = on_command("查风险",priority=30)
+
+@covid_19_mulu.handle()
+async def _(event:GroupMessageEvent):
+    if  str (event.group_id) in config_covid_19.group_covid:
+        l = f"——————疫情小助手——————\n/查询疫情[地区]\n/疫情资讯\n/境外输入排行榜\n/疫情现状\n/查风险[地区] 如 /查风险广东省,广州市,全部\n/covid_19开启\n/covid_19关闭\n/疫情文转图开\n/疫情文转图关\n【{await covid_txt()}】"
+        if str (event.group_id) in config_covid_19.group_image_covid:
+            b =  await CreateImg(text=l,colour=config_covid_19.colour,size=config_covid_19.size)
+            a = os.path.join('./',os.getcwd(),'covid_by_19',b+".png")
+            await covid_19_mulu.finish(MessageSegment.image(file=str("file:///")+a))
+        else:
+            await covid_19_mulu.finish(l)
 
 @cha_covid.handle()
 async def cha(event:GroupMessageEvent,foo:Message = CommandArg()):
@@ -188,16 +195,7 @@ async def phb(event:GroupMessageEvent):
                 
             
 
-@covid_19_mulu.handle()
-async def _(event:GroupMessageEvent):
-    if  str (event.group_id) in config_covid_19.group_covid:
-        l = f"——————疫情小助手——————\n/by_covid_19_search[地区]\n/by_covid_19_news\n/by_covid_19_list_jwsr\n/by_covid_19_details\n/by_covid_19_cha[地区] 如 /by_covid_19_cha广东省,广州市,全部\n/covid_19_by_group_turn_on\n/covid_19_by_group_turn_off\n/covid_19_by_image_turn_on\n/covid_19_by_image_turn_off\n【{await covid_txt()}】"
-        if str (event.group_id) in config_covid_19.group_image_covid:
-            b =  await CreateImg(text=l,colour=config_covid_19.colour,size=config_covid_19.size)
-            a = os.path.join('./',os.getcwd(),'covid_by_19',b+".png")
-            await covid_19_mulu.finish(MessageSegment.image(file=str("file:///")+a))
-        else:
-            await covid_19_mulu.finish(l)
+
         
 
 @searchcovid.handle()
@@ -306,7 +304,3 @@ async def httpx_covid_city(msg):
                 return f'—{msg}的疫情数据—\n🍁时间:{r["data"]["times"]}\n🍁新增确诊:{r["data"]["worldlist"][i]["conadd"]}\n🍁累计确诊:{r["data"]["worldlist"][i]["value"]}\n🍁现存确诊:{r["data"]["worldlist"][i]["econNum"]}\n🍁死亡人数:{r["data"]["worldlist"][i]["deathNum"]}\n🍁治愈人数:{r["data"]["worldlist"][i]["cureNum"]}\n【{await covid_txt()}】'
         
         return logger.error(f'查询{msg}地区出现错误 数据解析错误')
-
-
-
-
