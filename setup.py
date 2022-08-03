@@ -2,7 +2,7 @@
 import setuptools
 setuptools.setup(
     name = "nonebot_plugin_covid_19_by",
-    version = "3.0",
+    version = "4.0",
     packages = setuptools.find_packages(),
     author="bingyue",
     author_email="hello-yiqiu@qq.com",
@@ -13,6 +13,7 @@ setuptools.setup(
         "nonebot2>=2.0.0b2",
         "Pillow>=9.1.1",
         "nonebot-adapter-onebot>=2.0.0b1",
+        "httpx>=0.23.0"
     ],
     keywords=["nonebot_plugin_covid_19_by","nonebot","nonebot_plugin"],
     package_data={
