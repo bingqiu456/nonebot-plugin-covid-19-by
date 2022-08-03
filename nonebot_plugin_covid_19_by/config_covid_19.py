@@ -19,7 +19,7 @@ if group_image_covid==[]:
 add_group_123 = on_command("covid_19开启",permission=SUPERUSER|GROUP_ADMIN|GROUP_OWNER,priority=30)
 @add_group_123.handle()
 async def _(event:GroupMessageEvent):
-    group_covid.append(event.group_id)
+    group_covid.append(int(event.group_id))
     logger.success(f"covid_19:开启{event.group_id}成功")
     await add_group_123.finish("covid_19:开启本群成功")
     
@@ -27,7 +27,7 @@ del_group = on_command("covid_19关闭",permission=SUPERUSER|GROUP_ADMIN|GROUP_O
 @del_group.handle()
 async def del_group_(event:GroupMessageEvent):
     try:
-        group_covid.remove(event.group_id)
+        group_covid.remove(int(event.group_id))
     except(ValueError):
         logger.error("covid_19:此群不存在列表中")
         pass
@@ -38,7 +38,7 @@ async def del_group_(event:GroupMessageEvent):
 image_group = on_command("疫情文转图开",permission=SUPERUSER|GROUP_ADMIN|GROUP_OWNER,priority=30)
 @image_group.handle()
 async def _(event:GroupMessageEvent):
-    group_image_covid.append(event.group_id)
+    group_image_covid.append(int(event.group_id))
     logger.success(f"covid_19:开启{event.group_id}成功")
     await image_group.finish("covid_19:开启本群成功")
     
@@ -46,7 +46,7 @@ image_group_off = on_command("疫情文转图关",permission=SUPERUSER|GROUP_ADM
 @image_group_off.handle()
 async def del_group_(event:GroupMessageEvent):
     try:
-        group_image_covid.remove(event.group_id)
+        group_image_covid.remove(int(event.group_id))
     except(ValueError):
         logger.error("covid_19:此群不存在列表中")
         pass
