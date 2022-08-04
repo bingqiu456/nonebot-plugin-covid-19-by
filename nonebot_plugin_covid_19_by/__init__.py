@@ -72,6 +72,9 @@ async def cha(event: GroupMessageEvent, foo: Message = CommandArg()):
         except(httpx.ConnectError, httpx.NetworkError, httpx.ConnectTimeout):
             logger.error("covid_19:网络错误")
             await cha_covid.finish()
+        except(IndexError):
+            logger.error("covid_19:查询格式错误")
+            await cha_covid.finish("查询失败，命令格式错误\n示例:/查风险广东省,广州市")
         except(KeyError):
             d = f"————{a[0]}{a[1]}的风险地区————\n🍁该地区低风险（也有可能是查询错误）"
             logger.success(f"covid_19:获取{a[0]}{a[1]}地区成功")
