@@ -2,7 +2,7 @@
 import setuptools
 setuptools.setup(
     name = "nonebot_plugin_covid_19_by",
-    version = "4.0",
+    version = "4.5",
     packages = setuptools.find_packages(),
     author="bingyue",
     author_email="hello-yiqiu@qq.com",
