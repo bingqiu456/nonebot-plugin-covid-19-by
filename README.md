@@ -27,7 +27,7 @@ nb plugin install nonebot-plugin-covid-19-by
 
 ## 配置说明
 
-请把以下加进你的evn
+请把以下加进你的env
 
 `covid_19_by_group=[xxxx] #开启插件的群号 注意不要加""符号！！！`
   
